@@ -1,0 +1,1 @@
+rootProject.name = "project_module2_quan_li_ban_hang"
