@@ -8,7 +8,10 @@ public class Product {
     private long categoryId;
     private ProductStatus productStatus;
 
-    public Product(long productId, String productName, double productPrice, int productStock, long  categoryId, ProductStatus status) {
+    public Product() {
+    }
+
+    public Product(long productId, String productName, double productPrice, int productStock, long categoryId, ProductStatus status) {
         this.productId = productId;
         this.productName = productName;
         this.productPrice = productPrice;
@@ -63,5 +66,11 @@ public class Product {
 
     public void setProductStatus(ProductStatus productStatus) {
         this.productStatus = productStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + productId + " | Name: " + productName + " | Price: " + productPrice +
+                " | Stock: " + productStock + " | CategoryID: " + categoryId + " | Status: " + productStatus;
     }
 }

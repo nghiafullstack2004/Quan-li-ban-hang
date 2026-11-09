@@ -6,6 +6,9 @@ public class Customer {
     private String customerPhone;
     private String customerAddress;
 
+    public Customer() {
+    }
+
     public Customer(long customerId, String customerName, String customerPhone, String customerAddress) {
         this.customerId = customerId;
         this.customerName = customerName;
@@ -43,5 +46,10 @@ public class Customer {
 
     public void setCustomerAddress(String customerAddress) {
         this.customerAddress = customerAddress;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + customerId + " | Name: " + customerName + " | Phone: " + customerPhone + " | Address: " + customerAddress;
     }
 }

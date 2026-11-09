@@ -9,6 +9,9 @@ public class Payment {
     private PaymentMethod method;
     private LocalDateTime paidAt;
 
+    public Payment() {
+    }
+
     public Payment(long paymentId, long orderId, double amount, PaymentMethod method, LocalDateTime paidAt) {
         this.paymentId = paymentId;
         this.orderId = orderId;
@@ -55,5 +58,11 @@ public class Payment {
 
     public void setPaidAt(LocalDateTime paidAt) {
         this.paidAt = paidAt;
+    }
+
+    @Override
+    public String toString() {
+        return "PaymentID: " + paymentId + " | OrderID: " + orderId + " | Amount: " + amount +
+                " | Method: " + method + " | PaidAt: " + paidAt;
     }
 }

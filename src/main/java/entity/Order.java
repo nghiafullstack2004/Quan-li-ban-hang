@@ -13,6 +13,9 @@ public class Order {
     private double orderTotal;
     private List<OrderItem> items = new ArrayList<>();
 
+    public Order() {
+    }
+
     public Order(long orderId, long customerorderId, long userorderId, LocalDate date, OrderStatus status, double total) {
         this.orderId = orderId;
         this.customerorderId = customerorderId;
@@ -21,7 +24,6 @@ public class Order {
         this.orderStatus = status;
         this.orderTotal = total;
     }
-
 
     public long getOrderId() {
         return orderId;
@@ -69,5 +71,19 @@ public class Order {
 
     public void setOrderTotal(double orderTotal) {
         this.orderTotal = orderTotal;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderID: " + orderId + " | CustomerID: " + customerorderId + " | UserID: " + userId +
+                " | Date: " + orderDate + " | Status: " + orderStatus + " | Total: " + orderTotal;
     }
 }

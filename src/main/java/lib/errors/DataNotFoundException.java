@@ -1,4 +1,11 @@
 package lib.errors;
 
-public class DataNotFoundException {
+public class DataNotFoundException extends RuntimeException {
+    public DataNotFoundException() {
+        super("Data not found!");
+    }
+
+    public DataNotFoundException(String message) {
+        super(message);
+    }
 }

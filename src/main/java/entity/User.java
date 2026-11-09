@@ -7,6 +7,9 @@ public class User {
     private String userFullName;
     private UserRole userRole;
 
+    public User() {
+    }
+
     public User(long userId, String username, String userPassword, String userFullName, UserRole userRole) {
         this.userId = userId;
         this.username = username;
@@ -53,5 +56,10 @@ public class User {
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
+    }
+
+    @Override
+    public String toString() {
+        return "UserID: " + userId + " | Username: " + username + " | FullName: " + userFullName + " | Role: " + userRole;
     }
 }

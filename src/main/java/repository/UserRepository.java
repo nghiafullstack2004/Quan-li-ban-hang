@@ -8,43 +8,58 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository implements IRepository<User> {
-    private static final String FILENAME="data/users.csv";
+    private static final String FILE_NAME = "data/users.csv";
 
-    public void write(List<User> list){
-        String dataString="";
-        for (User item:list){
-            dataString=item.getUserId()+item.getUsername()+item.getUserPassword()+item.getUserFullName()+item.getUserRole()+"\n";
+    @Override
+    public void write(List<User> list) {
+        StringBuilder dataString = new StringBuilder();
+        for (User item : list) {
+            dataString.append(item.getUserId()).append(",")
+                    .append(item.getUsername()).append(",")
+                    .append(item.getUserPassword()).append(",")
+                    .append(item.getUserFullName()).append(",")
+                    .append(item.getUserRole()).append("\n");
         }
-        try{
-            FileWriter fileWriter=new FileWriter(FILENAME);
-            BufferedWriter bufferedWriter=new BufferedWriter(fileWriter);
-            bufferedWriter.write(dataString);
-            bufferedWriter.close();
+
+        try {
+            File file = new File(FILE_NAME);
+            if (file.getParentFile() != null) {
+                file.getParentFile().mkdirs();
+            }
+            try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
+                bufferedWriter.write(dataString.toString());
+            }
         } catch (IOException e) {
-            System.out.println("UserRepository.write.errors"+e.getMessage());
+            System.out.println("UserRepository.write.error: " + e.getMessage());
         }
     }
 
-    public List<User> read(){
-        List<User> list=new ArrayList<>();
-        try {
-            FileReader fileReader=new FileReader(FILENAME);
-            BufferedReader bufferedReader=new BufferedReader(fileReader);
-            while (true){
-                String line=bufferedReader.readLine();
-                if (line==null)break;
-                String[] data=line.split(",");
-                long userId=Long.parseLong(data[0]);
-                String userName=data[1];
-                String userPassword=data[2];
-                String userFullName=data[3];
-                UserRole userRole=UserRole.valueOf(data[4].trim());
-                User item=new User(userId,userName,userPassword,userFullName,userRole);
-                list.add(item);
+    @Override
+    public List<User> read() {
+        List<User> list = new ArrayList<>();
+        File file = new File(FILE_NAME);
+        if (!file.exists()) {
+            return list;
+        }
+
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty()) continue;
+                String[] data = line.split(",");
+                if (data.length >= 5) {
+                    long userId = Long.parseLong(data[0].trim());
+                    String userName = data[1].trim();
+                    String userPassword = data[2].trim();
+                    String userFullName = data[3].trim();
+                    UserRole userRole = UserRole.valueOf(data[4].trim());
+                    User item = new User(userId, userName, userPassword, userFullName, userRole);
+                    list.add(item);
+                }
             }
-            bufferedReader.close();
-        }catch (IOException e){
-            System.out.println("UserRepository.read.errors"+e.getMessage());
+        } catch (IOException e) {
+            System.out.println("UserRepository.read.error: " + e.getMessage());
         }
         return list;
     }
